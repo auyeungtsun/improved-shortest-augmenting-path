@@ -62,6 +62,24 @@ void Isap::bfs(int t) {
  * @param s The source node.
  * @param t The sink node.
  * @return The maximum flow from s to t.
+ *
+ * @note This algorithm can be used for solving Directed Graph Maximum Weight Closure.
+ *       Let G = (V, E) be a directed graph with weights w(v) on the vertices, where w(v) can be positive or negative.
+ *       A closure of G is a subset of vertices C ⊆ V, such that for every vertex v in C, all of its successors are also in C.
+ *       The weight of the closure is the sum of the weights of the vertices in it.
+ *       The goal is to find the closure of maximum weight.
+ *       This can be reduced to a min-cut problem (max-flow problem) as follows:
+ *       1. Construct a new graph G' from G.
+ *       2. Add a source node 's' and a sink node 't' to G'.
+ *       3. For each vertex v in G:
+ *          - If w(v) > 0, add an edge from 's' to v with capacity w(v).
+ *          - If w(v) < 0, add an edge from v to 't' with capacity -w(v).
+ *          - If w(v) = 0, no edges are added regarding the node weight.
+ *       4. For each edge (u, v) in G, add an edge from u to v in G' with infinite capacity.
+ *       5. Let W_pos be the sum of all positive w(v).
+ *       6. Compute the maximum flow F from 's' to 't' in G'.
+ *       7. The maximum closure weight is W_pos - F.
+ *       8. The maximum weight closure is all the vertices that can be reachable from s, in the residual graph.
  */
 int Isap::isap(int s, int t) {
     // Compute distance labels using BFS from the sink
